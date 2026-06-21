@@ -1,35 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class Product
-{
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public decimal Price { get; set; }
 
-
-    public void ADDProduct(Product newPro)
-    {
-
-    }
-
-    public void SearchProductName(string proName)
-    {
-
-    }
-
-    
-}
 
 class Program
 {
     static void Main(string[] args)
     {
-        List<Product> products = new List<Product>();
+        ProductManager proManger =  new ProductManager();
 
-        products.Add(new Product { Id = 1, Name = "dicast", Price = 150000 });
-        products.Add(new Product { Id = 2, Name = "PU", Price = 20000 });
-        products.Add(new Product { Id = 3, Name = "chodani", Price = 30000 });
 
 
         Console.WriteLine("1-Show all");
@@ -42,7 +21,7 @@ class Program
         switch (menuselcstion)
         {
             case "1":
-                foreach (Product product in products)
+                foreach (Product product in proManger.GetAllProducts())
                 {
                     Console.WriteLine($"Id = {product.Id} \n Name = {product.Name} \n Price = {product.Price}");
                 }
@@ -54,15 +33,15 @@ class Program
                 var prodPrice =  Console.ReadLine();
 
                 Product newProd = new Product();
-                newProd.Id = 5;
                 newProd.Name = prodname.ToString();
                 newProd.Price = Convert.ToDecimal(prodPrice);
-                products.Add(newProd);
+                proManger.AddProduct(newProd);
                 break;
             case "3":
                 Console.WriteLine("Enter name");
                 menuselcstion = Console.ReadLine();
-                var result = products.Where(p=>p.Name.Contains(menuselcstion.ToString()));
+                var result = proManger.SearchAll(menuselcstion.ToString());
+
                 foreach (var item in result)
                 {
                     Console.WriteLine($"Id = {item.Id} \n Name = {item.Name} \n Price = {item.Price}");
@@ -70,8 +49,8 @@ class Program
                 break;
 
             case "4":
-                var priceOrder = products.OrderBy(p => p.Price);
-                foreach (var item in priceOrder)
+                List<Product> orderedList = proManger.OrderbyPrice();
+                foreach (Product item in orderedList)
                 {
                     Console.WriteLine($"Id = {item.Id} \n Name = {item.Name} \n Price = {item.Price}");
                 }
