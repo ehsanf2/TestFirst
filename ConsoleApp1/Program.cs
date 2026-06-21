@@ -32,9 +32,10 @@ class Program
         products.Add(new Product { Id = 3, Name = "chodani", Price = 30000 });
 
 
-        Console.WriteLine("1-نمایش همه محصولات");
-        Console.WriteLine("2-  افزودن محصول ");
-        Console.WriteLine("3- جستجوی نام محصول ");
+        Console.WriteLine("1-Show all");
+        Console.WriteLine("2-  Add product");
+        Console.WriteLine("3- search name");
+        Console.WriteLine("4- ordeby Price");
 
         string menuselcstion = Console.ReadLine();
         int menusel = 0;
@@ -47,26 +48,36 @@ class Program
                 }
                 break;
             case "2":
-                Console.WriteLine("نام محصول");
+                Console.WriteLine("Enter name");
                 var prodname = Console.ReadLine();
-                Console.WriteLine("قیمت محصول را وارد کنید");
+                Console.WriteLine("Enter Price");
                 var prodPrice =  Console.ReadLine();
 
                 Product newProd = new Product();
-                newProd.Id = 4;
+                newProd.Id = 5;
                 newProd.Name = prodname.ToString();
                 newProd.Price = Convert.ToDecimal(prodPrice);
-                
+                products.Add(newProd);
                 break;
             case "3":
-                Console.WriteLine("نام محصول را وارد کنید");
+                Console.WriteLine("Enter name");
                 menuselcstion = Console.ReadLine();
                 var result = products.Where(p=>p.Name.Contains(menuselcstion.ToString()));
-
+                foreach (var item in result)
+                {
+                    Console.WriteLine($"Id = {item.Id} \n Name = {item.Name} \n Price = {item.Price}");
+                }
                 break;
-           
-               
-            default:
+
+            case "4":
+                var priceOrder = products.OrderBy(p => p.Price);
+                foreach (var item in priceOrder)
+                {
+                    Console.WriteLine($"Id = {item.Id} \n Name = {item.Name} \n Price = {item.Price}");
+                }
+                break;
+        
+        default:
                 break;
         }
 
