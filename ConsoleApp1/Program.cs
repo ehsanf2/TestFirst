@@ -7,7 +7,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        ProductManager proManger =  new ProductManager();
+        ProductManager proManger = new ProductManager();
 
 
 
@@ -17,6 +17,7 @@ class Program
         Console.WriteLine("4- ordeby Price");
         Console.WriteLine("5- Get By ID");
         Console.WriteLine("6- Delete Product");
+        Console.WriteLine("7- Edite Product");
 
         string menuselcstion = Console.ReadLine();
         int menusel = 0;
@@ -32,7 +33,7 @@ class Program
                 Console.WriteLine("Enter name");
                 var prodname = Console.ReadLine();
                 Console.WriteLine("Enter Price");
-                var prodPrice =  Console.ReadLine();
+                var prodPrice = Console.ReadLine();
 
                 Product newProd = new Product();
                 newProd.Name = prodname.ToString();
@@ -75,7 +76,7 @@ class Program
             case "6":
                 Console.WriteLine("Enter Product ID:");
 
-                 id = Convert.ToInt32(Console.ReadLine());
+                id = Convert.ToInt32(Console.ReadLine());
                 var selDeleteProduct = proManger.GetById(id);
                 if (selDeleteProduct != null)
                 {
@@ -90,8 +91,35 @@ class Program
                     Console.WriteLine("Product Not found!");
                 break;
 
-        
-        default:
+            case "7":
+                Console.WriteLine("Enter Product ID:");
+                id = Convert.ToInt32(Console.ReadLine());
+                var selEditProduct = proManger.GetById(id);
+
+                if (selEditProduct != null)
+                {
+                    Console.WriteLine("Enter New Name:");
+                    var newName = Console.ReadLine();
+
+                    Console.WriteLine("Enter New Price:");
+                    int newPrice = Convert.ToInt32(Console.ReadLine());
+                    bool editResult = proManger.UpdateProduct(selEditProduct.Id, newName.ToString(), newPrice);
+                    if (editResult)
+                        Console.WriteLine("Product edit was successfull!!");
+                    else
+                        Console.WriteLine("Product edit has an error!!");
+
+
+                }
+                else
+                    Console.WriteLine("Product Not Found!");
+
+
+                break;
+
+
+
+            default:
                 break;
         }
 

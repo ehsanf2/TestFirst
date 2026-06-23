@@ -38,7 +38,7 @@ public class ProductManager
             });
         File.WriteAllText(filePath, json);
     }
-
+    
     public bool DeleteProduct(int Id)
     {
         var product = Products.FirstOrDefault(p => p.Id == Id);
@@ -49,6 +49,22 @@ public class ProductManager
         else
         {
             Products.Remove(product);
+
+            SaveProducts();
+            return true;
+        }
+    }
+
+    public bool UpdateProduct(int id, string newName , decimal newPrice)
+    {
+        var product = Products.FirstOrDefault (p => p.Id == id);
+
+        if(product == null) 
+            return false;
+        else
+        {
+            product.Name = newName;
+            product.Price = newPrice;
 
             SaveProducts();
             return true;
